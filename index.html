@@ -4,10 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rumah Kost Syari Mahira | Kost Islami untuk Pelajar, Mahasiswa & Keluarga</title>
-  <meta name="description" content="Rumah Kost Syari Mahira: hunian islami yang nyaman dan aman. 2 bangunan, masing-masing 2 kamar tidur, dapur, kamar mandi, dan parkir motor. Mulai Rp1.000.000/bulan dengan diskon hingga 40%.">
+  <meta name="description" content="Rumah Kost Syari Mahira: hunian islami yang nyaman dan aman. 2 bangunan, masing-masing 2 kamar tidur, dapur, kamar mandi, dan parkir motor. Rp500.000/bulan per kamar atau Rp1.000.000/bulan per bangunan (2 kamar), diskon hingga 40%.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="assets/logo-ikon.png">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -15,7 +17,7 @@
 <nav class="nav">
   <div class="wadah">
     <a href="#beranda" class="logo">
-      <span class="logo-ikon">M</span>
+      <img class="logo-gambar" src="assets/logo-ikon.png" alt="Logo Rumah Kost Syari Mahira" width="52" height="52">
       <span><b data-isi="nama">Rumah Kost Syari Mahira</b><small>Kost Syari</small></span>
     </a>
     <ul class="menu" id="menu">
@@ -49,8 +51,9 @@
     </div>
     <div class="hero-kartu">
       <div style="font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:#d9c79b">Mulai dari</div>
-      <div class="harga" id="hargaHero">Rp1.000.000</div>
-      <div style="color:#c9d6d1">per bulan, per kamar</div>
+      <div class="harga" id="hargaHero">Rp500.000</div>
+      <div style="color:#c9d6d1">per kamar, per bulan</div>
+      <div class="paket-bangunan">atau <b id="hargaBangunanHero">Rp1.000.000</b> / bulan untuk 1 bangunan (2 kamar)</div>
       <ul>
         <li>Diskon 15% untuk sewa 1-2 bulan</li>
         <li>Diskon 20% untuk sewa 3-4 bulan</li>
@@ -107,7 +110,7 @@
     <div class="judul-bagian muncul">
       <span class="label">Harga &amp; Diskon</span>
       <h2>Semakin lama, semakin hemat</h2>
-      <p>Harga normal <b id="hargaNormal">Rp1.000.000</b> per bulan. Geser untuk menghitung total biaya sewa Anda.</p>
+      <p>Harga normal <b id="hargaNormal">Rp500.000</b> per kamar per bulan, atau <b id="hargaBangunan">Rp1.000.000</b> untuk 1 bangunan (2 kamar). Pilih jumlah kamar dan lama sewa untuk menghitung total biaya.</p>
       <div class="ornamen"></div>
     </div>
     <div class="tabel-diskon muncul" id="tabelDiskon"></div>
@@ -115,7 +118,12 @@
     <div class="kalkulator muncul">
       <div class="kiri">
         <h3>Kalkulator Sewa</h3>
-        <label for="lamaSewa">Lama sewa</label>
+        <label>Jumlah kamar</label>
+        <div class="pilih-kamar" id="pilihKamar">
+          <button type="button" data-k="1" class="aktif"><b>1 kamar</b><span id="lblKamar1">Rp500.000/bln</span></button>
+          <button type="button" data-k="2"><b>1 bangunan (2 kamar)</b><span id="lblKamar2">Rp1.000.000/bln</span></button>
+        </div>
+        <label for="lamaSewa" style="margin-top:18px">Lama sewa</label>
         <div class="angka-bulan"><span id="angkaBulan">12</span> bulan</div>
         <input type="range" id="lamaSewa" min="1" max="12" value="12">
         <div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--teks-2)"><span>1 bulan</span><span>12 bulan</span></div>

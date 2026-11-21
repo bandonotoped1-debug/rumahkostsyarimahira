@@ -58,6 +58,7 @@ h3 { font-size: 1.5rem; }
   width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
   background: var(--hijau); color: var(--emas); font-family: var(--serif); font-size: 1.4rem; font-weight: 700;
 }
+.logo-gambar { width: 52px; height: 52px; object-fit: contain; flex: none; }
 .logo b { font-family: var(--serif); font-size: 1.35rem; display: block; line-height: 1; }
 .logo small { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--emas-tua); }
 .menu { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
@@ -105,6 +106,8 @@ h3 { font-size: 1.5rem; }
   border-radius: 24px; padding: 30px; backdrop-filter: blur(4px);
 }
 .hero-kartu .harga { font-family: var(--serif); font-size: 3rem; color: var(--emas); line-height: 1; }
+.hero-kartu .paket-bangunan { margin-top: 10px; padding: 10px 14px; border-radius: 12px; background: rgba(196,161,90,.15); color: #efe3c4; font-size: .95rem; }
+.hero-kartu .paket-bangunan b { color: var(--emas); }
 .hero-kartu ul { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; }
 .hero-kartu li { display: flex; gap: 10px; align-items: center; color: #e5ece9; }
 .hero-kartu li::before { content: "✦"; color: var(--emas); }
@@ -165,6 +168,11 @@ h3 { font-size: 1.5rem; }
 .kalkulator .kanan h3 { color: var(--emas); }
 .kalkulator input[type=range] { width: 100%; accent-color: var(--hijau); margin: 14px 0 4px; }
 .angka-bulan { font-family: var(--serif); font-size: 2.6rem; color: var(--hijau); }
+.pilih-kamar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pilih-kamar button { border: 1.5px solid var(--garis); background: var(--krem); border-radius: 14px; padding: 12px; cursor: pointer; font-family: var(--sans); text-align: left; color: var(--teks); }
+.pilih-kamar button b { display: block; font-size: .92rem; color: var(--hijau); }
+.pilih-kamar button span { font-size: .8rem; color: var(--teks-2); }
+.pilih-kamar button.aktif { border-color: var(--hijau); background: var(--hijau-muda); box-shadow: inset 0 0 0 1px var(--hijau); }
 .pilihan-cepat { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
 .pilihan-cepat button { border: 1px solid var(--garis); background: var(--krem); border-radius: 99px; padding: 6px 14px; cursor: pointer; font-family: var(--sans); font-size: .85rem; }
 .pilihan-cepat button.aktif { background: var(--hijau); color: #fff; border-color: var(--hijau); }

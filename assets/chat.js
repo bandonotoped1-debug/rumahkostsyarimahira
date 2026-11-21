@@ -78,12 +78,16 @@ const Chatbot = {
     const tahun = ada("1 tahun", "setahun", "satu tahun", "12 bulan");
     if (angka || tahun) {
       const b = tahun ? 12 : Math.min(12, Math.max(1, Number(angka[1])));
-      const h = hitungSewa(b, d.harga);
-      return `Untuk sewa ${b} bulan:\n• Harga normal: ${rupiah(h.normal)}\n• Diskon: ${h.persen}%\n• Total bayar: ${rupiah(h.total)} (setara ${rupiah(h.perBulan)}/bulan)\n\nAnda hemat ${rupiah(h.hemat)}. Ingin langsung pesan? Hubungi WhatsApp ${wa}.`;
+      const satu = hitungSewa(b, d.harga, 1);
+      const dua = hitungSewa(b, d.harga, 2);
+      const minta2 = ada("2 kamar", "dua kamar", "bangunan", "satu rumah", "1 rumah");
+      const rinci = (judul, h) => `${judul}:\n• Harga normal: ${rupiah(h.normal)}\n• Diskon ${h.persen}%, total bayar ${rupiah(h.total)} (setara ${rupiah(h.perBulan)}/bulan)`;
+      return `Untuk sewa ${b} bulan:\n\n` + (minta2 ? rinci("1 bangunan (2 kamar)", dua) : rinci("1 kamar", satu) + "\n\n" + rinci("1 bangunan (2 kamar)", dua)) +
+        `\n\nIngin langsung pesan? Hubungi WhatsApp ${wa}.`;
     }
     if (ada("harga", "biaya", "tarif", "berapa", "sewa", "diskon", "promo", "murah")) {
       const daftar = d.harga.diskon.map((x) => `• ${x.min === 12 ? "1 tahun" : x.min === x.max ? x.min + " bulan" : x.min + "-" + x.max + " bulan"}: diskon ${x.persen}%`).join("\n");
-      return `Harga sewa ${rupiah(d.harga.bulanan)} per bulan. Ada diskon sesuai lama sewa:\n${daftar}\n\nCoba tanyakan misalnya "sewa 6 bulan berapa?" untuk menghitung totalnya.`;
+      return `Harga sewa ${rupiah(d.harga.bulanan)} per kamar per bulan, atau ${rupiah(d.harga.bulanan * 2)} per bulan untuk 1 bangunan (2 kamar). Ada diskon sesuai lama sewa:\n${daftar}\n\nCoba tanyakan misalnya "sewa 6 bulan berapa?" untuk menghitung totalnya.`;
     }
     if (ada("fasilitas", "dapur", "kamar mandi", "wc", "parkir", "motor")) {
       return "Fasilitas kami:\n" + d.fasilitas.map((f) => `${f.ikon} ${f.nama}: ${f.ket}`).join("\n");

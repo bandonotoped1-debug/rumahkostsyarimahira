@@ -7,7 +7,7 @@ import { ambil, json } from "../lib/store.js";
 function ringkasData(d) {
   const rp = (n) => "Rp" + Math.round(n).toLocaleString("id-ID");
   const p = d.profil || {};
-  const h = d.harga || { bulanan: 1000000, diskon: [] };
+  const h = d.harga || { bulanan: 500000, diskon: [] };
   return [
     `Nama: ${p.nama || "Rumah Kost Syari Mahira"}`,
     `Deskripsi: ${p.deskripsi || ""}`,
@@ -15,7 +15,7 @@ function ringkasData(d) {
     `WhatsApp: +${String(p.wa || "").replace(/\D/g, "")}`,
     `Email: ${p.email || "-"}`,
     `Jam kunjungan: ${p.jamKunjung || "-"}`,
-    `Harga: ${rp(h.bulanan)} per bulan.`,
+    `Harga: ${rp(h.bulanan)} per kamar per bulan; 1 bangunan (2 kamar) ${rp(h.bulanan * 2)} per bulan.`,
     `Diskon: ` + (h.diskon || []).map((x) => `${x.min}-${x.max} bulan ${x.persen}%`).join("; "),
     `Bangunan dan kamar: ` + (d.bangunan || []).map((b) => `${b.nama} (${b.peruntukan}; ${b.isi}): ` + (b.kamar || []).map((k) => `${k.nama} ${k.status}`).join(", ")).join(" | "),
     `Fasilitas: ` + (d.fasilitas || []).map((f) => `${f.nama} (${f.ket})`).join("; "),
@@ -42,7 +42,7 @@ export async function POST(req) {
   const system = `Anda adalah "Asisten Mahira", asisten ramah untuk calon penyewa Rumah Kost Syari Mahira.
 Jawab dalam bahasa Indonesia yang sopan, hangat, dan singkat (maksimal 5 kalimat atau daftar pendek). Boleh memakai sapaan islami secukupnya.
 Gunakan hanya informasi di bawah ini. Jika informasi tidak tersedia, katakan dengan jujur dan arahkan ke WhatsApp pengelola. Jangan mengarang harga, fasilitas, atau janji.
-Untuk menghitung biaya: total = harga bulanan x jumlah bulan x (1 - diskon). Tulis angka dalam format Rupiah.
+Untuk menghitung biaya: total = harga per kamar x jumlah kamar x jumlah bulan x (1 - diskon). Jika penanya tidak menyebut jumlah kamar, berikan hitungan untuk 1 kamar dan untuk 1 bangunan (2 kamar). Tulis angka dalam format Rupiah.
 Tolak dengan sopan pertanyaan yang tidak berhubungan dengan kost.
 
 DATA KOST:
@@ -71,5 +71,5 @@ ${ringkasData(data)}`;
 // Dipakai jika database belum berisi data (admin belum pernah menyimpan).
 const DATA_DASAR = {
   profil: { nama: "Rumah Kost Syari Mahira", deskripsi: "Kost syari untuk pelajar, mahasiswa, dan keluarga. 2 bangunan, masing-masing 2 kamar tidur, 1 dapur, 1 kamar mandi, dan parkir motor." },
-  harga: { bulanan: 1000000, diskon: [{ min: 1, max: 2, persen: 15 }, { min: 3, max: 4, persen: 20 }, { min: 5, max: 11, persen: 25 }, { min: 12, max: 12, persen: 40 }] },
+  harga: { bulanan: 500000, diskon: [{ min: 1, max: 2, persen: 15 }, { min: 3, max: 4, persen: 20 }, { min: 5, max: 11, persen: 25 }, { min: 12, max: 12, persen: 40 }] },
 };

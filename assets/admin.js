@@ -1,5 +1,6 @@
 /* Panel admin Rumah Kost Syari Mahira */
 let DATA, PRIVAT, SANDI = "";
+// STATUS diisi oleh cekStatus() di bawah
 const SANDI_LOKAL_BAWAAN = "mahira2026"; // TEBAKAN: hanya untuk mode coba. Di Vercel sandi diatur lewat ADMIN_PASSWORD.
 
 const $ = (id) => document.getElementById(id);
@@ -22,24 +23,44 @@ function tglIndo(s) { if (!s) return "-"; const d = new Date(s); return isNaN(d)
 /* ---------- Masuk ---------- */
 $("formMasuk").onsubmit = async (e) => {
   e.preventDefault();
-  const sandi = $("sandi").value;
+  const sandi = $("sandi").value.trim();
   const pesan = $("pesanMasuk");
   DATA = await Store.muat();
   try {
     if (Store.mode === "server") {
+      if (STATUS && !STATUS.sandiAdmin) throw new Error("ADMIN_PASSWORD belum diatur di Vercel. Buka Settings > Environment Variables, tambahkan ADMIN_PASSWORD, lalu Redeploy.");
       PRIVAT = await Store.muatPrivat(sandi);
     } else {
-      if (sandi !== SANDI_LOKAL_BAWAAN) throw new Error("salah");
+      if (sandi !== SANDI_LOKAL_BAWAAN) throw new Error(STATUS
+        ? "Database belum terpasang, jadi admin berjalan dalam mode coba. Sandi mode coba: mahira2026."
+        : "Kata sandi salah. Sandi mode coba: mahira2026.");
       PRIVAT = await Store.muatPrivat();
     }
     SANDI = sandi;
     sessionStorage.setItem("mahira-sandi", sandi);
     bukaAdmin();
   } catch (err) {
+    sessionStorage.removeItem("mahira-sandi");
     pesan.className = "pesan gagal";
-    pesan.textContent = "Kata sandi salah.";
+    pesan.textContent = Store.mode === "server" && !/ADMIN_PASSWORD/.test(err.message) ? "Kata sandi salah. Gunakan sandi yang Anda isi di ADMIN_PASSWORD (Vercel)." : err.message;
   }
 };
+
+/* Cek apa saja yang sudah dipasang di server (Vercel) */
+let STATUS = null;
+(async function cekStatus() {
+  try {
+    const r = await fetch("/api/status", { cache: "no-store" });
+    if (r.ok && (r.headers.get("content-type") || "").includes("json")) STATUS = await r.json();
+  } catch (e) {}
+  const el = $("statusServer");
+  if (!STATUS) { el.innerHTML = "Mode coba (dibuka tanpa server). Sandi: <b>mahira2026</b>"; return; }
+  const baris = (ok, teks) => `<div>${ok ? "✅" : "⚠️"} ${teks}</div>`;
+  el.innerHTML =
+    baris(STATUS.database, STATUS.database ? "Database terpasang" : "Database belum terpasang: perubahan hanya tersimpan di browser ini (sandi mode coba: <b>mahira2026</b>)") +
+    baris(STATUS.sandiAdmin, STATUS.sandiAdmin ? "Sandi admin sudah diatur" : "ADMIN_PASSWORD belum diatur di Vercel") +
+    baris(STATUS.ai, STATUS.ai ? "Chatbot AI aktif" : "Chatbot memakai jawaban sederhana (ANTHROPIC_API_KEY belum diisi)");
+})();
 
 (async function cobaMasukOtomatis() {
   const s = sessionStorage.getItem("mahira-sandi");
@@ -54,7 +75,7 @@ function bukaAdmin() {
   $("layarAdmin").hidden = false;
   const m = $("labelMode");
   m.className = "mode " + Store.mode;
-  m.textContent = Store.mode === "server" ? "● Tersimpan di server" : "● Mode coba (tersimpan di browser ini)";
+  m.textContent = Store.mode === "server" ? "● Tersimpan di database" : "● Mode coba (tersimpan di browser ini)";
   $("peringatanLokal").hidden = Store.mode === "server";
   renderSemua();
 }
@@ -143,7 +164,8 @@ function renderProfil() {
 
 function renderHarga() {
   $("hargaBulanan").value = DATA.harga.bulanan;
-  $("hargaBulanan").oninput = (e) => { DATA.harga.bulanan = Number(e.target.value) || 0; tandaiBerubah(); };
+  $("hargaBangunanAdmin").value = rupiah(DATA.harga.bulanan * 2);
+  $("hargaBulanan").oninput = (e) => { DATA.harga.bulanan = Number(e.target.value) || 0; $("hargaBangunanAdmin").value = rupiah(DATA.harga.bulanan * 2); tandaiBerubah(); };
   daftarEditor("daftarDiskon", DATA.harga.diskon, [
     { kunci: "min", label: "Dari (bulan)", jenis: "number" },
     { kunci: "max", label: "Sampai (bulan)", jenis: "number" },

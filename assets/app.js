@@ -26,8 +26,13 @@ function isiTeks() {
     el.target = "_blank";
     el.rel = "noopener";
   });
-  document.getElementById("hargaHero").textContent = rupiah(DATA.harga.bulanan);
-  document.getElementById("hargaNormal").textContent = rupiah(DATA.harga.bulanan);
+  const hk = DATA.harga.bulanan, hb = DATA.harga.bulanan * 2;
+  document.getElementById("hargaHero").textContent = rupiah(hk);
+  document.getElementById("hargaNormal").textContent = rupiah(hk);
+  document.getElementById("hargaBangunanHero").textContent = rupiah(hb);
+  document.getElementById("hargaBangunan").textContent = rupiah(hb);
+  document.getElementById("lblKamar1").textContent = rupiah(hk) + "/bln";
+  document.getElementById("lblKamar2").textContent = rupiah(hb) + "/bln";
   document.querySelector(".hero-kartu ul").innerHTML = DATA.harga.diskon
     .map((d) => `<li>Diskon ${d.persen}% untuk sewa ${labelDurasi(d)}</li>`).join("");
   document.getElementById("tahun").textContent = new Date().getFullYear();
@@ -71,7 +76,8 @@ function tampilHarga() {
       ${d.persen === terbesar ? '<span class="pita">PALING HEMAT</span>' : ""}
       <div class="persen">${d.persen}%</div>
       <div class="durasi">Sewa ${labelDurasi(d)}</div>
-      <div class="kecil">${rupiah(DATA.harga.bulanan * (1 - d.persen / 100))} / bulan</div>
+      <div class="kecil">${rupiah(DATA.harga.bulanan * (1 - d.persen / 100))} / kamar / bulan</div>
+      <div class="kecil">${rupiah(DATA.harga.bulanan * 2 * (1 - d.persen / 100))} / bangunan / bulan</div>
     </div>`).join("");
 
   const slider = document.getElementById("lamaSewa");
@@ -79,11 +85,20 @@ function tampilHarga() {
   cepat.innerHTML = [1, 3, 6, 12].map((b) => `<button type="button" data-b="${b}">${b === 12 ? "1 tahun" : b + " bulan"}</button>`).join("");
   cepat.onclick = (e) => { const b = e.target.dataset.b; if (b) { slider.value = b; hitung(); } };
   slider.oninput = hitung;
+  let kamar = 1;
+  const pk = document.getElementById("pilihKamar");
+  pk.onclick = (e) => {
+    const b = e.target.closest("button[data-k]");
+    if (!b) return;
+    kamar = Number(b.dataset.k);
+    pk.querySelectorAll("button").forEach((x) => x.classList.toggle("aktif", x === b));
+    hitung();
+  };
   hitung();
 
   function hitung() {
     const bulan = Number(slider.value);
-    const h = hitungSewa(bulan, DATA.harga);
+    const h = hitungSewa(bulan, DATA.harga, kamar);
     document.getElementById("angkaBulan").textContent = bulan;
     document.getElementById("rNormal").textContent = rupiah(h.normal);
     document.getElementById("rDiskon").textContent = h.persen + "%";
@@ -92,7 +107,7 @@ function tampilHarga() {
     document.getElementById("rTotal").textContent = rupiah(h.total);
     cepat.querySelectorAll("button").forEach((x) => x.classList.toggle("aktif", Number(x.dataset.b) === bulan));
     const t = document.getElementById("tombolPesanWa");
-    t.href = linkWa(`Assalamu'alaikum, saya ingin menyewa kamar di ${DATA.profil.nama} selama ${bulan} bulan (total ${rupiah(h.total)}). Apakah masih tersedia?`);
+    t.href = linkWa(`Assalamu'alaikum, saya ingin menyewa ${kamar === 2 ? "1 bangunan (2 kamar)" : "1 kamar"} di ${DATA.profil.nama} selama ${bulan} bulan (total ${rupiah(h.total)}). Apakah masih tersedia?`);
     t.target = "_blank";
   }
 }

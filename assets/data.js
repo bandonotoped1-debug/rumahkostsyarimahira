@@ -24,7 +24,7 @@ const DATA_BAWAAN = {
     mapsEmbed: "",
   },
   harga: {
-    bulanan: 1000000,
+    bulanan: 500000, // harga per kamar per bulan (1 bangunan = 2 kamar = Rp1.000.000)
     // Diskon sesuai arahan pemilik. Sewa 7-11 bulan mengikuti diskon 25% (TEBAKAN, bisa diubah di admin).
     diskon: [
       { min: 1, max: 2, persen: 15 },
@@ -94,9 +94,9 @@ function diskonUntuk(bulan, harga) {
   return t ? t.persen : 0;
 }
 
-function hitungSewa(bulan, harga) {
+function hitungSewa(bulan, harga, kamar = 1) {
   const persen = diskonUntuk(bulan, harga);
-  const normal = harga.bulanan * bulan;
+  const normal = harga.bulanan * bulan * kamar;
   const total = normal * (1 - persen / 100);
   return { persen, normal, total, hemat: normal - total, perBulan: total / bulan };
 }
