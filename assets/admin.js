@@ -1,6 +1,6 @@
 /* Panel admin Rumah Kost Syari Mahira */
 let DATA, PRIVAT, SANDI = "";
-const SANDI_LOKAL_BAWAAN = "mahira2026"; // TEBAKAN: hanya untuk mode coba. Di Netlify sandi diatur lewat ADMIN_PASSWORD.
+const SANDI_LOKAL_BAWAAN = "mahira2026"; // TEBAKAN: hanya untuk mode coba. Di Vercel sandi diatur lewat ADMIN_PASSWORD.
 
 const $ = (id) => document.getElementById(id);
 const JUDUL = {

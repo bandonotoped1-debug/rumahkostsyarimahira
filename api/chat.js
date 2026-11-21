@@ -1,11 +1,8 @@
 // Chatbot AI "Asisten Mahira" memakai Claude (Anthropic).
-// Pasang kunci di Netlify: Environment variables > ANTHROPIC_API_KEY
+// Pasang kunci di Vercel: Settings > Environment Variables > ANTHROPIC_API_KEY
 // Jika kunci belum ada, fungsi ini membalas 501 dan web memakai penjawab sederhana bawaan.
 import Anthropic from "@anthropic-ai/sdk";
-import { getStore } from "@netlify/blobs";
-
-const json = (data, status = 200) =>
-  new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
+import { ambil, json } from "../lib/store.js";
 
 function ringkasData(d) {
   const rp = (n) => "Rp" + Math.round(n).toLocaleString("id-ID");
@@ -27,8 +24,7 @@ function ringkasData(d) {
   ].join("\n");
 }
 
-export default async (req) => {
-  if (req.method !== "POST") return json({ error: "Metode tidak didukung" }, 405);
+export async function POST(req) {
   if (!process.env.ANTHROPIC_API_KEY) return json({ error: "AI belum diaktifkan" }, 501);
 
   const body = await req.json().catch(() => null);
@@ -39,7 +35,9 @@ export default async (req) => {
   while (riwayat.length && riwayat[0].role !== "user") riwayat.shift();
   if (!riwayat.length) return json({ error: "Pesan kosong" }, 400);
 
-  const data = (await getStore("kost-mahira").get("publik", { type: "json" })) || {};
+  let data = {};
+  try { data = (await ambil("publik")) || {}; } catch (e) { /* database belum dipasang */ }
+  if (!data.profil) data = DATA_DASAR;
 
   const system = `Anda adalah "Asisten Mahira", asisten ramah untuk calon penyewa Rumah Kost Syari Mahira.
 Jawab dalam bahasa Indonesia yang sopan, hangat, dan singkat (maksimal 5 kalimat atau daftar pendek). Boleh memakai sapaan islami secukupnya.
@@ -68,6 +66,10 @@ ${ringkasData(data)}`;
     console.error(err);
     return json({ error: "AI sedang sibuk" }, 502);
   }
-};
+}
 
-export const config = { path: "/api/chat" };
+// Dipakai jika database belum berisi data (admin belum pernah menyimpan).
+const DATA_DASAR = {
+  profil: { nama: "Rumah Kost Syari Mahira", deskripsi: "Kost syari untuk pelajar, mahasiswa, dan keluarga. 2 bangunan, masing-masing 2 kamar tidur, 1 dapur, 1 kamar mandi, dan parkir motor." },
+  harga: { bulanan: 1000000, diskon: [{ min: 1, max: 2, persen: 15 }, { min: 3, max: 4, persen: 20 }, { min: 5, max: 11, persen: 25 }, { min: 12, max: 12, persen: 40 }] },
+};

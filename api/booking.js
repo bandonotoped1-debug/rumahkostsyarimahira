@@ -1,18 +1,14 @@
 // Menerima formulir "Jadwalkan Kunjungan" dari halaman publik.
-import { getStore } from "@netlify/blobs";
-
-const json = (data, status = 200) =>
-  new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
+import { ambil, simpan, json, penyimpananSiap } from "../lib/store.js";
 
 const potong = (v, n) => String(v ?? "").trim().slice(0, n);
 
-export default async (req) => {
-  if (req.method !== "POST") return json({ error: "Metode tidak didukung" }, 405);
+export async function POST(req) {
+  if (!penyimpananSiap()) return json({ error: "Database belum dipasang" }, 503);
   const b = await req.json().catch(() => null);
   if (!b || !potong(b.nama, 80) || !potong(b.hp, 20)) return json({ error: "Nama dan nomor wajib diisi" }, 400);
 
-  const store = getStore("kost-mahira");
-  const privat = (await store.get("privat", { type: "json" })) || { penghuni: [], pengunjung: [] };
+  const privat = (await ambil("privat")) || { penghuni: [], pengunjung: [] };
   privat.pengunjung = privat.pengunjung || [];
   if (privat.pengunjung.length > 2000) privat.pengunjung.length = 2000;
   privat.pengunjung.unshift({
@@ -28,8 +24,6 @@ export default async (req) => {
     jumlah: potong(b.jumlah, 3),
     catatan: potong(b.catatan, 500),
   });
-  await store.setJSON("privat", privat);
+  await simpan("privat", privat);
   return json({ ok: true });
-};
-
-export const config = { path: "/api/booking" };
+}

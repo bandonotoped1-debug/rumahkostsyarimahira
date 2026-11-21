@@ -1,6 +1,6 @@
 /* ==========================================================
    Asisten Mahira (chatbot)
-   1. Jika web berjalan di Netlify dan kunci AI sudah dipasang,
+   1. Jika web berjalan di Vercel dan kunci AI sudah dipasang,
       pertanyaan dijawab oleh AI (Claude) lewat /api/chat.
    2. Jika belum, bot menjawab dengan aturan sederhana berdasarkan
       data kost (harga, fasilitas, kamar, aturan, FAQ).

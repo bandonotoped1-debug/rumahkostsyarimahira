@@ -1,7 +1,7 @@
 /* ==========================================================
    Data bawaan + penyimpanan untuk web Rumah Kost Syari Mahira
    ----------------------------------------------------------
-   - Jika web dipasang di Netlify (dengan folder netlify/functions),
+   - Jika web dipasang di Vercel (dengan folder api/) dan database sudah dipasang,
      data disimpan di server sehingga semua pengunjung melihat
      perubahan yang dibuat admin.
    - Jika dibuka langsung dari komputer (tanpa server), data
