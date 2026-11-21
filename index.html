@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rumah Kost Syari Mahira | Kost Islami untuk Pelajar, Mahasiswa & Keluarga</title>
+  <meta name="description" content="Rumah Kost Syari Mahira: hunian islami yang nyaman dan aman. 2 bangunan, masing-masing 2 kamar tidur, dapur, kamar mandi, dan parkir motor. Mulai Rp1.000.000/bulan dengan diskon hingga 40%.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wadah">
+    <a href="#beranda" class="logo">
+      <span class="logo-ikon">M</span>
+      <span><b data-isi="nama">Rumah Kost Syari Mahira</b><small>Kost Syari</small></span>
+    </a>
+    <ul class="menu" id="menu">
+      <li><a href="#tentang">Tentang</a></li>
+      <li><a href="#fasilitas">Fasilitas</a></li>
+      <li><a href="#kamar">Kamar</a></li>
+      <li><a href="#harga">Harga</a></li>
+      <li><a href="#galeri">Galeri</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+    </ul>
+    <a href="#kunjungan" class="tombol utama kecil">Jadwalkan Survei</a>
+    <button class="tombol-menu" id="tombolMenu" aria-label="Buka menu">☰</button>
+  </div>
+</nav>
+
+<header class="hero" id="beranda">
+  <div class="wadah">
+    <div>
+      <div class="salam">Assalamu'alaikum, selamat datang</div>
+      <h1>Hunian <em>Syar'i</em> yang Tenang, Nyaman &amp; Terjaga</h1>
+      <p class="lead" data-isi="tagline">Hunian nyaman, aman, dan islami untuk pelajar, mahasiswa, dan keluarga</p>
+      <div class="hero-aksi">
+        <a href="#harga" class="tombol emas">Hitung Biaya Sewa</a>
+        <a href="#" class="tombol garis" data-wa>Chat WhatsApp</a>
+      </div>
+      <div class="statistik">
+        <div><b>2</b><span>Bangunan</span></div>
+        <div><b>4</b><span>Kamar Tidur</span></div>
+        <div><b>40%</b><span>Diskon Sewa 1 Tahun</span></div>
+      </div>
+    </div>
+    <div class="hero-kartu">
+      <div style="font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:#d9c79b">Mulai dari</div>
+      <div class="harga" id="hargaHero">Rp1.000.000</div>
+      <div style="color:#c9d6d1">per bulan, per kamar</div>
+      <ul>
+        <li>Diskon 15% untuk sewa 1-2 bulan</li>
+        <li>Diskon 20% untuk sewa 3-4 bulan</li>
+        <li>Diskon 25% untuk sewa 5-6 bulan</li>
+        <li>Diskon 40% untuk sewa 1 tahun</li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<section class="bagian" id="tentang">
+  <div class="wadah tentang">
+    <div class="tentang-gambar muncul" id="gambarTentang">
+      <div>Rumah Kost<br><span style="font-size:2.4rem">Syari Mahira</span></div>
+    </div>
+    <div class="muncul">
+      <span class="label">Tentang Kami</span>
+      <h2>Tempat tinggal yang menenangkan hati</h2>
+      <p data-isi="deskripsi"></p>
+      <div class="poin">
+        <div><i>1</i><span><b>Untuk pelajar &amp; mahasiswa</b><br>Suasana tenang, nyaman untuk belajar dan beribadah.</span></div>
+        <div><i>2</i><span><b>Ramah keluarga</b><br>Setiap bangunan punya dapur dan kamar mandi sendiri.</span></div>
+        <div><i>3</i><span><b>Lingkungan syar'i</b><br>Aturan yang menjaga adab, keamanan, dan kenyamanan bersama.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bagian alt" id="fasilitas">
+  <div class="wadah">
+    <div class="judul-bagian muncul">
+      <span class="label">Fasilitas</span>
+      <h2>Semua yang Anda butuhkan</h2>
+      <div class="ornamen"></div>
+    </div>
+    <div class="grid tiga" id="daftarFasilitas"></div>
+  </div>
+</section>
+
+<section class="bagian" id="kamar">
+  <div class="wadah">
+    <div class="judul-bagian muncul">
+      <span class="label">Bangunan &amp; Kamar</span>
+      <h2>Pilih kamar yang tersedia</h2>
+      <p>Dua bangunan terpisah, masing-masing dengan 2 kamar tidur, 1 dapur, dan 1 kamar mandi.</p>
+      <div class="ornamen"></div>
+    </div>
+    <div class="grid dua" id="daftarBangunan"></div>
+  </div>
+</section>
+
+<section class="bagian alt" id="harga">
+  <div class="wadah">
+    <div class="judul-bagian muncul">
+      <span class="label">Harga &amp; Diskon</span>
+      <h2>Semakin lama, semakin hemat</h2>
+      <p>Harga normal <b id="hargaNormal">Rp1.000.000</b> per bulan. Geser untuk menghitung total biaya sewa Anda.</p>
+      <div class="ornamen"></div>
+    </div>
+    <div class="tabel-diskon muncul" id="tabelDiskon"></div>
+
+    <div class="kalkulator muncul">
+      <div class="kiri">
+        <h3>Kalkulator Sewa</h3>
+        <label for="lamaSewa">Lama sewa</label>
+        <div class="angka-bulan"><span id="angkaBulan">12</span> bulan</div>
+        <input type="range" id="lamaSewa" min="1" max="12" value="12">
+        <div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--teks-2)"><span>1 bulan</span><span>12 bulan</span></div>
+        <div class="pilihan-cepat" id="pilihanCepat"></div>
+      </div>
+      <div class="kanan">
+        <h3>Rincian Biaya</h3>
+        <div class="rincian">
+          <div><span>Harga normal</span><span class="coret" id="rNormal"></span></div>
+          <div><span>Diskon</span><span id="rDiskon"></span></div>
+          <div><span>Anda hemat</span><span id="rHemat"></span></div>
+          <div><span>Setara per bulan</span><span id="rPerBulan"></span></div>
+        </div>
+        <div style="font-size:.85rem;color:#c9d6d1">Total yang dibayar</div>
+        <div class="total" id="rTotal"></div>
+        <a href="#" class="tombol emas" style="margin-top:20px" id="tombolPesanWa">Pesan via WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bagian" id="galeri">
+  <div class="wadah">
+    <div class="judul-bagian muncul">
+      <span class="label">Galeri</span>
+      <h2>Lihat suasana kost kami</h2>
+      <div class="ornamen"></div>
+    </div>
+    <div class="filter-galeri" id="filterGaleri">
+      <button class="aktif" data-f="semua">Semua</button>
+      <button data-f="foto">Foto</button>
+      <button data-f="video">Video</button>
+    </div>
+    <div class="galeri" id="daftarGaleri"></div>
+  </div>
+</section>
+
+<section class="bagian alt" id="aturan">
+  <div class="wadah grid dua" style="gap:48px">
+    <div class="muncul">
+      <span class="label">Tata Tertib</span>
+      <h2>Aturan kost syar'i</h2>
+      <p style="color:var(--teks-2)">Aturan sederhana agar semua penghuni merasa aman dan nyaman.</p>
+      <ul class="aturan" id="daftarAturan"></ul>
+    </div>
+    <div class="muncul">
+      <span class="label">Tanya Jawab</span>
+      <h2>Pertanyaan umum</h2>
+      <p style="color:var(--teks-2)">Punya pertanyaan lain? Tanyakan pada asisten kami di pojok kanan bawah.</p>
+      <div id="daftarFaq"></div>
+    </div>
+  </div>
+</section>
+
+<section class="bagian" id="kunjungan">
+  <div class="wadah">
+    <div class="judul-bagian muncul">
+      <span class="label">Survei Lokasi</span>
+      <h2>Jadwalkan kunjungan</h2>
+      <p>Isi formulir ini, pengelola akan menghubungi Anda untuk konfirmasi jadwal.</p>
+      <div class="ornamen"></div>
+    </div>
+    <form class="kartu muncul" id="formKunjungan" style="max-width:760px;margin:auto">
+      <div class="baris-form">
+        <div><label for="kNama">Nama lengkap</label><input id="kNama" name="nama" required maxlength="80"></div>
+        <div><label for="kHp">No. WhatsApp</label><input id="kHp" name="hp" required maxlength="20" inputmode="tel" placeholder="08xxxxxxxxxx"></div>
+      </div>
+      <div class="baris-form">
+        <div><label for="kKategori">Saya adalah</label>
+          <select id="kKategori" name="kategori"><option>Pelajar</option><option>Mahasiswa</option><option>Keluarga</option><option>Lainnya</option></select></div>
+        <div><label for="kTanggal">Tanggal kunjungan</label><input id="kTanggal" name="tanggal" type="date" required></div>
+      </div>
+      <div class="baris-form">
+        <div><label for="kDurasi">Rencana lama sewa</label>
+          <select id="kDurasi" name="durasi"><option>1 bulan</option><option>2 bulan</option><option>3 bulan</option><option>4 bulan</option><option>5 bulan</option><option>6 bulan</option><option selected>12 bulan</option></select></div>
+        <div><label for="kJumlah">Jumlah orang</label><input id="kJumlah" name="jumlah" type="number" min="1" max="10" value="1"></div>
+      </div>
+      <div class="baris-form satu">
+        <div><label for="kCatatan">Catatan (opsional)</label><textarea id="kCatatan" name="catatan" rows="3" maxlength="500"></textarea></div>
+      </div>
+      <button class="tombol utama" type="submit">Kirim Permintaan Kunjungan</button>
+      <div class="pesan" id="pesanKunjungan"></div>
+    </form>
+  </div>
+</section>
+
+<section class="bagian alt" id="kontak">
+  <div class="wadah kontak">
+    <div class="muncul">
+      <span class="label">Kontak</span>
+      <h2>Hubungi kami</h2>
+      <div class="info-kontak">
+        <div><i>📍</i><span><b>Alamat</b><br><span data-isi="alamat"></span></span></div>
+        <div><i>💬</i><span><b>WhatsApp</b><br><a href="#" data-wa data-isi-wa></a></span></div>
+        <div><i>✉️</i><span><b>Email</b><br><span data-isi="email"></span></span></div>
+        <div><i>🕘</i><span><b>Jam kunjungan</b><br><span data-isi="jamKunjung"></span></span></div>
+      </div>
+    </div>
+    <div class="muncul">
+      <div class="peta" id="peta"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wadah">
+    <div><b data-isi="nama">Rumah Kost Syari Mahira</b><br>Hunian islami untuk pelajar, mahasiswa, dan keluarga.</div>
+    <div>© <span id="tahun"></span> Rumah Kost Syari Mahira · <a href="admin.html">Masuk Admin</a></div>
+  </div>
+</footer>
+
+<a href="#" class="wa-melayang" data-wa aria-label="Chat WhatsApp">✆</a>
+
+<div class="lightbox" id="lightbox"><button aria-label="Tutup">×</button><img alt=""></div>
+
+<!-- Chatbot -->
+<button class="chat-tombol" id="chatTombol" aria-label="Buka asisten"><span class="titik"></span><span class="ikon-chat">💬</span><span class="teks">Tanya Asisten Mahira</span></button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Asisten Mahira">
+  <div class="chat-kepala">
+    <div class="avatar">M</div>
+    <div><b>Asisten Mahira</b><small>Menjawab otomatis 24 jam</small></div>
+    <button id="chatTutup" aria-label="Tutup">×</button>
+  </div>
+  <div class="chat-isi" id="chatIsi"></div>
+  <div class="chat-saran" id="chatSaran"></div>
+  <form class="chat-form" id="chatForm">
+    <input id="chatInput" placeholder="Tulis pertanyaan Anda..." autocomplete="off" maxlength="500">
+    <button type="submit" aria-label="Kirim">➤</button>
+  </form>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/chat.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

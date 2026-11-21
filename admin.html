@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin | Rumah Kost Syari Mahira</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    body { background: #f3efe6; }
+    .masuk { min-height: 100vh; display: grid; place-items: center; padding: 16px; background: linear-gradient(135deg, var(--hijau), #0b2e27); }
+    .masuk .kartu { width: min(420px, 100%); }
+    .tata { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+    .samping { background: var(--hijau); color: var(--krem); padding: 22px 14px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+    .samping .logo { color: var(--krem); margin: 0 8px 26px; }
+    .samping .logo small { color: var(--emas); }
+    .samping button { display: flex; gap: 10px; width: 100%; text-align: left; background: none; border: 0; color: #d9e4df; padding: 11px 14px; border-radius: 10px; cursor: pointer; font-family: var(--sans); font-size: .93rem; font-weight: 500; }
+    .samping button:hover { background: rgba(255,255,255,.06); }
+    .samping button.aktif { background: var(--emas); color: var(--hijau); font-weight: 700; }
+    .utama-admin { padding: 30px; max-width: 1100px; width: 100%; }
+    .atas { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 22px; }
+    .atas h1 { font-size: 2.2rem; margin: 0; }
+    .mode { font-size: .8rem; padding: 6px 12px; border-radius: 99px; font-weight: 700; }
+    .mode.lokal { background: #fbefd4; color: #8a6418; }
+    .mode.server { background: #dff3e6; color: #1e7a45; }
+    .panel { display: none; }
+    .panel.aktif { display: block; }
+    .kartu + .kartu { margin-top: 18px; }
+    .baris-item { display: grid; gap: 10px; align-items: end; padding: 14px; border: 1px solid var(--garis); border-radius: 12px; margin-bottom: 10px; background: #fffdf8; }
+    .baris-item label { font-size: .78rem; margin-bottom: 4px; }
+    .baris-item input, .baris-item select, .baris-item textarea { padding: 9px 11px; font-size: .9rem; }
+    .hapus { background: #f6e2de; color: #a03b2b; border: 0; border-radius: 10px; padding: 9px 12px; cursor: pointer; font-weight: 700; }
+    .aksi-simpan { position: sticky; bottom: 0; background: linear-gradient(transparent, #f3efe6 30%); padding: 20px 0 10px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .notif { position: fixed; top: 20px; right: 20px; z-index: 300; padding: 14px 20px; border-radius: 12px; font-weight: 600; box-shadow: var(--bayang); display: none; }
+    .notif.ok { display: block; background: #1e7a45; color: #fff; }
+    .notif.gagal { display: block; background: #a03b2b; color: #fff; }
+    .stat { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 18px; }
+    .stat .kartu b { font-family: var(--serif); font-size: 2.4rem; color: var(--hijau); display: block; line-height: 1; }
+    .stat .kartu span { color: var(--teks-2); font-size: .85rem; }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--garis); vertical-align: top; }
+    th { color: var(--hijau); font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+    .tabel-wadah { overflow-x: auto; }
+    .petunjuk { background: #fffaf0; border: 1px solid #ecdcb4; border-radius: 12px; padding: 14px 16px; font-size: .9rem; color: #6b5420; margin-bottom: 16px; }
+    .pratinjau { width: 70px; height: 52px; object-fit: cover; border-radius: 8px; background: var(--hijau-muda); }
+    @media (max-width: 860px) {
+      .tata { grid-template-columns: 1fr; }
+      .samping { position: static; height: auto; display: flex; overflow-x: auto; gap: 4px; padding: 10px; }
+      .samping .logo { display: none; }
+      .samping button { white-space: nowrap; width: auto; }
+      .utama-admin { padding: 18px 16px; }
+      .stat { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="masuk" id="layarMasuk">
+  <form class="kartu" id="formMasuk">
+    <div style="text-align:center;margin-bottom:20px">
+      <span class="logo-ikon" style="margin:0 auto 12px;width:56px;height:56px;font-size:1.8rem">M</span>
+      <h2 style="font-size:2rem;margin:0">Masuk Admin</h2>
+      <p style="color:var(--teks-2);margin:4px 0 0">Rumah Kost Syari Mahira</p>
+    </div>
+    <label for="sandi">Kata sandi</label>
+    <input type="password" id="sandi" required autocomplete="current-password">
+    <button class="tombol utama" style="width:100%;margin-top:16px">Masuk</button>
+    <div class="pesan" id="pesanMasuk"></div>
+    <p style="font-size:.8rem;color:var(--teks-2);margin-top:16px;text-align:center"><a href="index.html">← Kembali ke halaman utama</a></p>
+  </form>
+</div>
+
+<div class="tata" id="layarAdmin" hidden>
+  <aside class="samping" id="menuAdmin">
+    <div class="logo"><span class="logo-ikon">M</span><span><b>Mahira</b><small>Panel Admin</small></span></div>
+    <button data-p="dasbor" class="aktif">📊 Dasbor</button>
+    <button data-p="profil">🏠 Profil Kost</button>
+    <button data-p="harga">💰 Harga &amp; Diskon</button>
+    <button data-p="bangunan">🛏️ Bangunan &amp; Kamar</button>
+    <button data-p="fasilitas">✨ Fasilitas</button>
+    <button data-p="galeri">🖼️ Foto &amp; Video</button>
+    <button data-p="aturan">📜 Aturan &amp; FAQ</button>
+    <button data-p="penghuni">👥 Penghuni</button>
+    <button data-p="pengunjung">📅 Pengunjung</button>
+    <button data-p="cadangan">💾 Cadangan Data</button>
+    <button id="keluar">🚪 Keluar</button>
+  </aside>
+
+  <main class="utama-admin">
+    <div class="atas">
+      <h1 id="judulPanel">Dasbor</h1>
+      <div style="display:flex;gap:10px;align-items:center">
+        <span class="mode" id="labelMode"></span>
+        <a class="tombol garis kecil" href="index.html" target="_blank">Lihat Web ↗</a>
+      </div>
+    </div>
+
+    <!-- DASBOR -->
+    <section class="panel aktif" id="p-dasbor">
+      <div class="stat">
+        <div class="kartu"><b id="sKamarKosong">0</b><span>Kamar tersedia</span></div>
+        <div class="kartu"><b id="sPenghuni">0</b><span>Penghuni aktif</span></div>
+        <div class="kartu"><b id="sPengunjungBaru">0</b><span>Permintaan kunjungan baru</span></div>
+        <div class="kartu"><b id="sPendapatan">0</b><span>Nilai sewa penghuni aktif</span></div>
+      </div>
+      <div class="kartu">
+        <h3>Permintaan kunjungan terbaru</h3>
+        <div class="tabel-wadah" id="dasborPengunjung"></div>
+      </div>
+      <div class="kartu" id="peringatanLokal" hidden>
+        <h3>⚠️ Mode coba (lokal)</h3>
+        <p>Saat ini perubahan hanya tersimpan di browser ini. Setelah web dipasang di Netlify, perubahan akan tersimpan di server dan langsung terlihat oleh semua pengunjung. Gunakan menu <b>Cadangan Data</b> untuk menyimpan salinan.</p>
+      </div>
+    </section>
+
+    <!-- PROFIL -->
+    <section class="panel" id="p-profil">
+      <div class="kartu">
+        <div class="baris-form satu"><div><label>Nama kost</label><input data-profil="nama"></div></div>
+        <div class="baris-form satu"><div><label>Slogan singkat</label><input data-profil="tagline"></div></div>
+        <div class="baris-form satu"><div><label>Deskripsi</label><textarea rows="5" data-profil="deskripsi"></textarea></div></div>
+        <div class="baris-form">
+          <div><label>Nomor WhatsApp (awali 62, tanpa +)</label><input data-profil="wa" inputmode="tel"></div>
+          <div><label>Email</label><input data-profil="email" type="email"></div>
+        </div>
+        <div class="baris-form satu"><div><label>Alamat lengkap</label><textarea rows="2" data-profil="alamat"></textarea></div></div>
+        <div class="baris-form satu"><div><label>Jam kunjungan</label><input data-profil="jamKunjung"></div></div>
+        <div class="baris-form satu"><div><label>Link embed Google Maps (opsional)</label><input data-profil="mapsEmbed" placeholder="https://www.google.com/maps/embed?pb=..."><small style="color:var(--teks-2)">Di Google Maps: Bagikan → Sematkan peta → salin link di dalam src="...". Jika kosong, peta memakai alamat di atas.</small></div></div>
+      </div>
+    </section>
+
+    <!-- HARGA -->
+    <section class="panel" id="p-harga">
+      <div class="kartu">
+        <div class="baris-form"><div><label>Harga sewa per bulan (Rp)</label><input type="number" id="hargaBulanan" min="0" step="50000"></div><div></div></div>
+        <h3>Tingkat diskon</h3>
+        <div class="petunjuk">Atur diskon berdasarkan lama sewa. Contoh: dari 3 sampai 4 bulan, diskon 20%.</div>
+        <div id="daftarDiskon"></div>
+        <button class="tombol garis kecil" type="button" id="tambahDiskon">+ Tambah tingkat diskon</button>
+      </div>
+    </section>
+
+    <!-- BANGUNAN -->
+    <section class="panel" id="p-bangunan">
+      <div id="daftarBangunanAdmin"></div>
+      <button class="tombol garis kecil" type="button" id="tambahBangunan" style="margin-top:14px">+ Tambah bangunan</button>
+    </section>
+
+    <!-- FASILITAS -->
+    <section class="panel" id="p-fasilitas">
+      <div class="kartu">
+        <div class="petunjuk">Ikon bisa diisi emoji, misalnya 🛏️ 🍳 🚿 🏍️ 📶 🕌 💧 ❄️</div>
+        <div id="daftarFasilitasAdmin"></div>
+        <button class="tombol garis kecil" type="button" id="tambahFasilitas">+ Tambah fasilitas</button>
+      </div>
+    </section>
+
+    <!-- GALERI -->
+    <section class="panel" id="p-galeri">
+      <div class="kartu">
+        <div class="petunjuk">
+          <b>Cara menambah foto/video dari Google Drive:</b><br>
+          1. Unggah foto/video ke Google Drive.<br>
+          2. Klik kanan file → <b>Bagikan</b> → ubah akses menjadi <b>"Siapa saja yang memiliki link"</b>.<br>
+          3. Klik <b>Salin link</b>, lalu tempel di kolom "Link Google Drive" di bawah ini.
+        </div>
+        <div id="daftarGaleriAdmin"></div>
+        <button class="tombol garis kecil" type="button" id="tambahFoto">+ Tambah foto</button>
+        <button class="tombol garis kecil" type="button" id="tambahVideo">+ Tambah video</button>
+      </div>
+    </section>
+
+    <!-- ATURAN & FAQ -->
+    <section class="panel" id="p-aturan">
+      <div class="kartu">
+        <h3>Tata tertib</h3>
+        <div id="daftarAturanAdmin"></div>
+        <button class="tombol garis kecil" type="button" id="tambahAturan">+ Tambah aturan</button>
+      </div>
+      <div class="kartu">
+        <h3>Tanya jawab (juga dipakai oleh chatbot)</h3>
+        <div id="daftarFaqAdmin"></div>
+        <button class="tombol garis kecil" type="button" id="tambahFaq">+ Tambah pertanyaan</button>
+      </div>
+    </section>
+
+    <!-- PENGHUNI -->
+    <section class="panel" id="p-penghuni">
+      <div class="kartu">
+        <h3>Tambah penghuni</h3>
+        <form id="formPenghuni">
+          <div class="baris-form">
+            <div><label>Nama</label><input name="nama" required></div>
+            <div><label>No. HP</label><input name="hp" inputmode="tel"></div>
+          </div>
+          <div class="baris-form">
+            <div><label>Kamar</label><select name="kamar" id="pilihKamar"></select></div>
+            <div><label>Kategori</label><select name="kategori"><option>Pelajar</option><option>Mahasiswa</option><option>Keluarga</option><option>Lainnya</option></select></div>
+          </div>
+          <div class="baris-form">
+            <div><label>Tanggal mulai</label><input name="mulai" type="date" required></div>
+            <div><label>Lama sewa (bulan)</label><input name="durasi" type="number" min="1" max="24" value="12" required></div>
+          </div>
+          <div class="baris-form satu"><div><label>Catatan</label><input name="catatan"></div></div>
+          <button class="tombol utama kecil">Simpan penghuni</button>
+          <span style="font-size:.85rem;color:var(--teks-2);margin-left:10px">Status kamar otomatis menjadi "terisi".</span>
+        </form>
+      </div>
+      <div class="kartu">
+        <h3>Daftar penghuni</h3>
+        <div class="tabel-wadah" id="tabelPenghuni"></div>
+      </div>
+    </section>
+
+    <!-- PENGUNJUNG -->
+    <section class="panel" id="p-pengunjung">
+      <div class="kartu">
+        <h3>Tambah pengunjung manual</h3>
+        <form id="formPengunjung">
+          <div class="baris-form">
+            <div><label>Nama</label><input name="nama" required></div>
+            <div><label>No. WhatsApp</label><input name="hp" inputmode="tel"></div>
+          </div>
+          <div class="baris-form">
+            <div><label>Tanggal kunjungan</label><input name="tanggal" type="date"></div>
+            <div><label>Kategori</label><select name="kategori"><option>Pelajar</option><option>Mahasiswa</option><option>Keluarga</option><option>Lainnya</option></select></div>
+          </div>
+          <div class="baris-form satu"><div><label>Catatan</label><input name="catatan"></div></div>
+          <button class="tombol utama kecil">Simpan pengunjung</button>
+        </form>
+      </div>
+      <div class="kartu">
+        <h3>Daftar pengunjung &amp; permintaan survei</h3>
+        <div class="tabel-wadah" id="tabelPengunjung"></div>
+      </div>
+    </section>
+
+    <!-- CADANGAN -->
+    <section class="panel" id="p-cadangan">
+      <div class="kartu">
+        <h3>Cadangan data</h3>
+        <p>Unduh semua data (profil, harga, kamar, galeri, penghuni, pengunjung) sebagai file. Simpan file ini baik-baik, atau gunakan untuk memindahkan data ke perangkat/server lain.</p>
+        <button class="tombol utama kecil" type="button" id="unduhData">⬇ Unduh cadangan</button>
+        <label class="tombol garis kecil" style="display:inline-flex;margin:0 0 0 8px;color:var(--hijau)">⬆ Pulihkan dari file<input type="file" id="pulihkanData" accept="application/json" hidden></label>
+      </div>
+      <div class="kartu">
+        <h3>Kembalikan ke pengaturan awal</h3>
+        <p>Menghapus semua perubahan profil, harga, fasilitas, dan galeri. Data penghuni dan pengunjung tidak dihapus.</p>
+        <button class="tombol bahaya kecil" type="button" id="resetData">Kembalikan ke awal</button>
+      </div>
+    </section>
+
+    <div class="aksi-simpan" id="aksiSimpan" hidden>
+      <button class="tombol utama" id="tombolSimpan">💾 Simpan perubahan</button>
+      <span style="font-size:.85rem;color:var(--teks-2)" id="infoSimpan">Ada perubahan yang belum disimpan.</span>
+    </div>
+  </main>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/admin.js"></script>
+</body>
+</html>
