@@ -26,7 +26,7 @@ function isiTeks() {
     el.target = "_blank";
     el.rel = "noopener";
   });
-  const hk = DATA.harga.bulanan, hb = DATA.harga.bulanan * 2;
+  const hk = hargaPokok(DATA.harga, 1), hb = hargaPokok(DATA.harga, 2);
   document.getElementById("hargaHero").textContent = rupiah(hk);
   document.getElementById("hargaNormal").textContent = rupiah(hk);
   document.getElementById("hargaBangunanHero").textContent = rupiah(hb);
@@ -35,6 +35,19 @@ function isiTeks() {
   document.getElementById("lblKamar2").textContent = rupiah(hb) + "/bln";
   document.querySelector(".hero-kartu ul").innerHTML = DATA.harga.diskon
     .map((d) => `<li>Diskon ${d.persen}% untuk sewa ${labelDurasi(d)}</li>`).join("");
+  // Angka di bagian atas mengikuti data admin
+  const jumlahBangunan = DATA.bangunan.length;
+  const jumlahKamar = DATA.bangunan.reduce((s, b) => s + (b.kamar || []).length, 0);
+  document.getElementById("statBangunan").textContent = jumlahBangunan;
+  document.getElementById("statKamar").textContent = jumlahKamar;
+  const terbesar = [...DATA.harga.diskon].sort((a, b) => b.persen - a.persen)[0];
+  if (terbesar) {
+    document.getElementById("statDiskon").textContent = terbesar.persen + "%";
+    document.getElementById("statDiskonLabel").textContent = "Diskon Sewa " + labelDurasi(terbesar);
+  }
+  const tersedia = DATA.bangunan.reduce((s, b) => s + (b.kamar || []).filter((k) => k.status === "tersedia").length, 0);
+  document.getElementById("ringkasBangunan").textContent =
+    `${jumlahBangunan} bangunan dengan total ${jumlahKamar} kamar tidur. Saat ini ${tersedia} kamar tersedia.`;
   document.getElementById("tahun").textContent = new Date().getFullYear();
 
   const peta = document.getElementById("peta");
@@ -76,8 +89,8 @@ function tampilHarga() {
       ${d.persen === terbesar ? '<span class="pita">PALING HEMAT</span>' : ""}
       <div class="persen">${d.persen}%</div>
       <div class="durasi">Sewa ${labelDurasi(d)}</div>
-      <div class="kecil">${rupiah(DATA.harga.bulanan * (1 - d.persen / 100))} / kamar / bulan</div>
-      <div class="kecil">${rupiah(DATA.harga.bulanan * 2 * (1 - d.persen / 100))} / bangunan / bulan</div>
+      <div class="kecil">${rupiah(hargaPokok(DATA.harga, 1) * (1 - d.persen / 100))} / kamar / bulan</div>
+      <div class="kecil">${rupiah(hargaPokok(DATA.harga, 2) * (1 - d.persen / 100))} / bangunan / bulan</div>
     </div>`).join("");
 
   const slider = document.getElementById("lamaSewa");

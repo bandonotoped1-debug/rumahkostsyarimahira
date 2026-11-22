@@ -137,7 +137,9 @@
     <!-- HARGA -->
     <section class="panel" id="p-harga">
       <div class="kartu">
-        <div class="baris-form"><div><label>Harga sewa per kamar per bulan (Rp)</label><input type="number" id="hargaBulanan" min="0" step="50000"></div><div><label>Harga 1 bangunan (2 kamar)</label><input id="hargaBangunanAdmin" disabled></div></div>
+        <h3>Harga pokok (sebelum diskon)</h3>
+        <div class="baris-form"><div><label>Sewa 1 kamar per bulan (Rp)</label><input type="number" id="hargaBulanan" min="0" step="50000"><small id="lihatHargaKamar" style="color:var(--teks-2)"></small></div><div><label>Sewa 1 bangunan (2 kamar) per bulan (Rp)</label><input type="number" id="hargaBangunanAdmin" min="0" step="50000"><small id="lihatHargaBangunan" style="color:var(--teks-2)"></small></div></div>
+        <div class="petunjuk">Harga di halaman utama (bagian atas, tabel diskon, kalkulator, dan chatbot) otomatis mengikuti harga di sini setelah Anda klik <b>Simpan perubahan</b>.</div>
         <h3>Tingkat diskon</h3>
         <div class="petunjuk">Atur diskon berdasarkan lama sewa. Contoh: dari 3 sampai 4 bulan, diskon 20%.</div>
         <div id="daftarDiskon"></div>

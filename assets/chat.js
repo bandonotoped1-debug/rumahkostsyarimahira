@@ -87,7 +87,7 @@ const Chatbot = {
     }
     if (ada("harga", "biaya", "tarif", "berapa", "sewa", "diskon", "promo", "murah")) {
       const daftar = d.harga.diskon.map((x) => `• ${x.min === 12 ? "1 tahun" : x.min === x.max ? x.min + " bulan" : x.min + "-" + x.max + " bulan"}: diskon ${x.persen}%`).join("\n");
-      return `Harga sewa ${rupiah(d.harga.bulanan)} per kamar per bulan, atau ${rupiah(d.harga.bulanan * 2)} per bulan untuk 1 bangunan (2 kamar). Ada diskon sesuai lama sewa:\n${daftar}\n\nCoba tanyakan misalnya "sewa 6 bulan berapa?" untuk menghitung totalnya.`;
+      return `Harga sewa ${rupiah(hargaPokok(d.harga, 1))} per kamar per bulan, atau ${rupiah(hargaPokok(d.harga, 2))} per bulan untuk 1 bangunan (2 kamar). Ada diskon sesuai lama sewa:\n${daftar}\n\nCoba tanyakan misalnya "sewa 6 bulan berapa?" untuk menghitung totalnya.`;
     }
     if (ada("fasilitas", "dapur", "kamar mandi", "wc", "parkir", "motor")) {
       return "Fasilitas kami:\n" + d.fasilitas.map((f) => `${f.ikon} ${f.nama}: ${f.ket}`).join("\n");

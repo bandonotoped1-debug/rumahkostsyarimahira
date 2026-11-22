@@ -163,9 +163,16 @@ function renderProfil() {
 }
 
 function renderHarga() {
+  if (!DATA.harga.bangunan) DATA.harga.bangunan = hargaPokok(DATA.harga, 2);
+  const tampil = () => {
+    $("lihatHargaKamar").textContent = "Tampil di web: " + rupiah(DATA.harga.bulanan) + " / bulan";
+    $("lihatHargaBangunan").textContent = "Tampil di web: " + rupiah(DATA.harga.bangunan) + " / bulan";
+  };
   $("hargaBulanan").value = DATA.harga.bulanan;
-  $("hargaBangunanAdmin").value = rupiah(DATA.harga.bulanan * 2);
-  $("hargaBulanan").oninput = (e) => { DATA.harga.bulanan = Number(e.target.value) || 0; $("hargaBangunanAdmin").value = rupiah(DATA.harga.bulanan * 2); tandaiBerubah(); };
+  $("hargaBangunanAdmin").value = DATA.harga.bangunan;
+  tampil();
+  $("hargaBulanan").oninput = (e) => { DATA.harga.bulanan = Number(e.target.value) || 0; tampil(); tandaiBerubah(); };
+  $("hargaBangunanAdmin").oninput = (e) => { DATA.harga.bangunan = Number(e.target.value) || 0; tampil(); tandaiBerubah(); };
   daftarEditor("daftarDiskon", DATA.harga.diskon, [
     { kunci: "min", label: "Dari (bulan)", jenis: "number" },
     { kunci: "max", label: "Sampai (bulan)", jenis: "number" },
